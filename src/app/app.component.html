@@ -1,0 +1,50 @@
+<main class="flex flex-1 select-none">
+  <section #containerZombies class="relative h-screen max-w-[600px] w-full overflow-hidden bg-[length:100%]" style="background-image: url('assets/background.png');">
+    <span class="absolute top-0 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 text-4xl text-white bg-black px-3 pt-1 pb-2 leading-none rounded-lg">
+      <h1 id="record">{{ points }}</h1>
+      <span><img src="assets/coin.png" alt="coins" width="32rem"></span>
+    </span>
+    @for (zombie of zombies; track $index) {
+      <figure (mousedown)="click(zombie)" [style]="'top:' + zombie.top + 'px; left:' + zombie.left + 'px'" class="absolute w-[70px] cursor-pointer">
+        <img class="pointer-events-none" [src]="zombie.image" alt="zombie">
+      </figure>
+    }
+    @if (clickedZombie) {
+      <span [style]="'top:' + clickedZombie.top + 'px; left:' + clickedZombie.left + 'px'" class="absolute z-10 flex items-center gap-1 text-white bg-black p-1 leading-none rounded-lg">
+        <p>{{ pointsExponent }}</p>
+        <figure class="w-[16px]">
+          <img class="w-full h-full" src="assets/coin.png" alt="coin">
+        </figure>
+      </span>
+    }
+  </section>
+
+  @if (turretsCount.length) {
+    <section class="flex flex-col gap-1 w-12 py-8 bg-[#666666]">
+      @for (turret of turretsCount; track $index) {
+        <figure class="w-full">
+          <img class="w-full h-full" src="assets/turret2.png" alt="torreta">
+        </figure>
+      }
+    </section>
+  }
+
+  <section class="flex flex-col flex-1 bg-[#666666] pl-8 p-4">
+    <div class="flex flex-col gap-2">
+      @for (upgrade of upgrades; track $index) {
+        <button (click)="upgrade.action(upgrade)" class="flex flex-col gap-1 w-32 items-center bg-black p-2 rounded-lg text-white">
+          <span class="flex gap-2 items-center">
+            <figure class="w-[16px]">
+              <img class="w-full h-full" [src]="upgrade.imagen" [alt]="upgrade.text">
+            </figure>
+            <p>{{ upgrade.text }}</p>
+            <figure class="w-[16px]">
+              <img class="w-full h-full" src="assets/coin.png" alt="coin">
+            </figure>
+          </span>
+          <p>${{ upgrade.cost }}</p>
+        </button>
+      }
+    </div>
+  </section>
+</main>
